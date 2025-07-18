@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Katrineholm Team Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- ✅ UPDATED STYLES FOR MOBILE FRIENDLINESS -->
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      touch-action: manipulation; /* mobile touch support */
+    }
+
+    #map {
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .leaflet-popup-content {
+      font-size: 1.1rem; /* make popups easier to read on phone */
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize the map centered on Katrineholm
+    var map = L.map('map').setView([58.9956, 16.2072], 13);
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Example colleague data
+    const teamLocations = [
+      { name: "Amazon Katrineholms",
+	address: "Österleden 29",
+	lat: 58.99721738853493, 
+	lng: 16.241956674682207
+      },
+      {
+        name: "Bogdan Costica<br>Bogdan Costica Raul",
+        address: "Oddergatan 36C",
+        lat: 58.990872207282294,
+        lng: 16.171615740234817
+      },
+      {
+        name: "Gabriel Lupulescu<br>Nicolae Augustin Pauna",
+        address: "Rönngatan 1C",
+        lat: 58.99279366788954,
+        lng: 16.17709426725457
+      },    
+    ];
+
+    // Add pins to the map with name and address (if address exists)
+    teamLocations.forEach(person => {
+      let popupContent = `<b>${person.name}</b>`;
+      if (person.address) {
+        popupContent += `<br>${person.address}`;
+      }
+
+      L.marker([person.lat, person.lng])
+        .addTo(map)
+        .bindPopup(popupContent);
+    });
+  </script>
+</body>
+</html>
